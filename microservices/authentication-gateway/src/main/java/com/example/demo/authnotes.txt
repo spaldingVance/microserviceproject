@@ -1,0 +1,88 @@
+
+//AuthenticationEntryPoint
+@Component
+public class AuthenticationEntryPointJwt implements AuthenticationEntryPoint {
+    @Override
+    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) throws IOException {
+
+        httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+        final Map<String, Object> body = new HashMap<>();
+        body.put("code", HttpServletResponse.SC_UNAUTHORIZED);
+        body.put("payload", "You need to login first in order to perform this action.");
+
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(httpServletResponse.getOutputStream(), body);
+    }
+}
+
+
+//AccessDeniedHandler
+@Component
+public class AccessDeniedHandlerJwt implements AccessDeniedHandler {
+    @Override
+    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
+
+        httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+        final Map<String, Object> body = new HashMap<>();
+        body.put("code", HttpServletResponse.SC_FORBIDDEN);
+        body.put("payload", "You don't have required role to perform this action.");
+
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(httpServletResponse.getOutputStream(), body);
+    }
+}
+
+//configuration
+@EnableWebSecurity
+   @EnableGlobalMethodSecurity(prePostEnabled = true)
+   public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+       @Autowired
+       private Environment env;
+       @Autowired
+       private SecurityUserDetailsService securityUserDetailsService;
+       @Autowired
+       private SecurityRequestFilter securityRequestFilter;
+       @Autowired
+       private AuthenticationEntryPointJwt authenticationEntryPointJwt;
+       @Autowired
+       private AccessDeniedHandlerJwt accessDeniedHandlerJwt;
+
+       @Override
+       public void configure(AuthenticationManagerBuilder auth) throws Exception {
+           auth.userDetailsService(securityUserDetailsService).passwordEncoder(passwordEncoder());
+       }
+
+       @Bean
+       public BCryptPasswordEncoder passwordEncoder() {
+           return new BCryptPasswordEncoder();
+       }
+
+       @Override
+       @Bean
+       public AuthenticationManager authenticationManagerBean() throws Exception {
+           return super.authenticationManagerBean();
+       }
+
+       @Override
+       protected void configure(HttpSecurity httpSecurity) throws Exception {
+
+           if (Boolean.parseBoolean(env.getRequiredProperty("security.disable.csrf")))
+               httpSecurity.csrf().disable();
+
+           httpSecurity
+                   .httpBasic().disable()
+                   .formLogin().disable()
+                   .authorizeRequests()
+                   .antMatchers(env.getRequiredProperty("security.uri.white-list").split(",")).permitAll()
+                   .anyRequest().authenticated().and()
+                   .exceptionHandling().authenticationEntryPoint(authenticationEntryPointJwt).and()
+                   .exceptionHandling().accessDeniedHandler(accessDeniedHandlerJwt).and()
+                   .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+           httpSecurity.addFilterBefore(securityRequestFilter, UsernamePasswordAuthenticationFilter.class);
+       }
+   }
