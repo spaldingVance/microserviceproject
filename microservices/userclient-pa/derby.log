@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Tue Apr 13 14:52:50 EDT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0178-cc94-3bfc-0000087fd730 
-on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/userclient-pa/mydb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
+Tue Apr 13 20:21:08 EDT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0178-cdc0-cdac-00000b3acd88 
+on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/userclient-pa/userdb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
 Loaded from file:/Users/spaldingvance/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Oracle Corporation
 java.runtime.version=11.0.9+7-LTS
@@ -12,10 +12,10 @@ os.version=10.16
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Tue Apr 13 14:55:31 EDT 2021:
-Shutting down instance a816c00e-0178-cc94-3bfc-0000087fd730 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/userclient-pa/mydb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
-Tue Apr 13 14:55:32 EDT 2021 Thread[Thread-19,5,main] Cleanup action starting
-ERROR XBM0I: Directory mydb cannot be removed.
+Tue Apr 13 22:06:01 EDT 2021:
+Shutting down instance a816c00e-0178-cdc0-cdac-00000b3acd88 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/userclient-pa/userdb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
+Tue Apr 13 22:06:02 EDT 2021 Thread[Thread-19,5,main] Cleanup action starting
+ERROR XBM0I: Directory userdb cannot be removed.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.services.monitor.Monitor.removePersistentService(Unknown Source)
@@ -34,8 +34,8 @@ ERROR XBM0I: Directory mydb cannot be removed.
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at java.base/java.lang.Thread.run(Thread.java:834)
 Cleanup action completed
-Tue Apr 13 14:55:32 EDT 2021 Thread[Thread-19,5,main] Cleanup action starting
-ERROR XBM0I: Directory mydb cannot be removed.
+Tue Apr 13 22:06:02 EDT 2021 Thread[Thread-19,5,main] Cleanup action starting
+ERROR XBM0I: Directory userdb cannot be removed.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.services.monitor.Monitor.removePersistentService(Unknown Source)

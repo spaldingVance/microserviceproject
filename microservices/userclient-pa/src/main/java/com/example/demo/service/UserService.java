@@ -16,6 +16,7 @@ public class UserService {
 
 	public User saveNewUser(User newUser) {
 		System.out.println("got to here");
+		System.out.println(newUser);
 		User user = userRepository.save(newUser);
 		return user;
 

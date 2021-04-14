@@ -33,6 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		final String jwtToken = jwtUtilService.extractJwtFromRequest(request);
 		logger.info("request " + request);
+		logger.info("JWT TOKEN: " + jwtToken);
 		
 		if (jwtToken != null && jwtUtilService.validateToken(jwtToken)) {
 			UserDetails userDetails = new User(jwtUtilService.getUseridFromToken(jwtToken), "", jwtUtilService.getRolesFromToken(jwtToken));

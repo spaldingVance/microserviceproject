@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.example.demo.model.User;
+import com.example.demo.model.AuthenticationUser;
 import com.example.demo.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
@@ -64,6 +64,7 @@ public class JwtUtilService {
 	}
 
 	public boolean validateToken(String authToken) {
+			logger.info("authToken in JwtUtilService: " + authToken);
 		try {
 			Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
 			return true;
@@ -82,19 +83,19 @@ public class JwtUtilService {
 	public String extractJwtFromRequest(HttpServletRequest request) {
 		String bearerToken = request.getHeader("Authorization");
 		logger.info("bearer token: " + bearerToken);
-		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
 			return bearerToken.substring(7, bearerToken.length());
 		}
 		return null;
 	}
 
-	public User getLoggedInUser(HttpServletRequest request) {
+	public AuthenticationUser getLoggedInUser(HttpServletRequest request) {
 		String token = extractJwtFromRequest(request);
 		String userid = getUseridFromToken(token);
 		
 		logger.info("in getLoggedInUser() userid: " + userid);
 
-		User user = userRepository.findByUserid(userid);
+		AuthenticationUser user = userRepository.findByUserid(userid);
 		return user;
 	}
 
@@ -105,6 +106,7 @@ public class JwtUtilService {
 		logger.info(String.valueOf(claims));
 		Boolean isAdmin = claims.get("isAdmin", Boolean.class);
 		Boolean isUser = claims.get("isUser", Boolean.class);
+//		claims.get("isUser");
 		
 		System.out.println("is User? : " + isUser);
 		

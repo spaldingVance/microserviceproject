@@ -19,7 +19,7 @@ import com.example.demo.model.NewUserRequest;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:9090")
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -29,18 +29,23 @@ public class UserController {
 
 	@GetMapping("/{userid}")
 	public ResponseEntity<?> getUser(@PathVariable @Valid String userid) {
+		System.out.println("in get user");
+		System.out.println("Userid is : " + userid);
 		User user = userService.findById(userid);
 		if (user != null) {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		} else {
-			return (ResponseEntity<?>) ResponseEntity.notFound();
+			System.out.println(user);
+//			return (ResponseEntity<?>) ResponseEntity.notFound();
+			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
 		}
 		
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> registerUser(@Valid User user) {
+	public ResponseEntity<String> registerUser(@RequestBody @Valid User user) {
 		System.out.println("at /user/register");
+		System.out.println(user.getUserid());
 		User registeredUser = userService.saveNewUser(user);
 		
 		if(registeredUser != null) {

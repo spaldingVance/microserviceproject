@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.AuthenticationUser;
 import com.example.demo.model.CurrentUser;
-import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 
 @Service
@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
 		
-		User foundUser = userRepository.findByUserid(userid);
+		AuthenticationUser foundUser = userRepository.findByUserid(userid);
 		
 		if (foundUser == null) throw new UsernameNotFoundException("User does not excist");
 		

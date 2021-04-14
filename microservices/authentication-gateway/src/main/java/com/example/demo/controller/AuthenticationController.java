@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.AuthenticationRequest;
+import com.example.demo.model.AuthenticationUser;
 import com.example.demo.model.NewUserRequest;
-import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.BcryptGenerator;
 import com.example.demo.security.JwtRequestFilter;
@@ -56,29 +56,34 @@ public class AuthenticationController {
 	public ResponseEntity<Map<String, String>> createAuthenticationToken( @RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 		logger.info("Made it to /authenticate ~~~~~~~");
 		logger.info(authenticationRequest.getUserid());
+		logger.info(authenticationRequest.getPassword());
+		
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					authenticationRequest.getUserid(), authenticationRequest.getPassword()));
 		} catch (DisabledException e) {
+			logger.info(getHello());
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
+		
+		
 
 		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUserid());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
-		User loggedUser = userRepository.findByUserid(authenticationRequest.getUserid());
+		AuthenticationUser loggedUser = userRepository.findByUserid(authenticationRequest.getUserid());
 
-		String name = loggedUser.getName();
+//		String name = loggedUser.getName();
 
 		String authority = "USER";
 
 		Map<String, String> response = new HashMap<>();
 		response.put("token", token);
-		response.put("name", name);
+//		response.put("name", name);
 		response.put("credentials", authority);
 
 		System.out.println(response);
@@ -86,19 +91,27 @@ public class AuthenticationController {
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping("/authenticate/new")
-	public User createNewUser(@RequestBody NewUserRequest newUserRequest) {
-		System.out.println("Authenticate New");
-		User newUser = new User();
-		newUser.setUserid(newUserRequest.getUserid());
-		newUser.setName(newUserRequest.getName());
-		newUser.setPassword(bcryptgenerator.passwordEncoder(newUserRequest.getPassword()));
-		newUser.setAge(newUserRequest.getAge());
-		newUser.setRole(newUserRequest.getRole());
-
-		return userService.saveNewUser(newUser);
-
-	}
+//	@PostMapping("/authenticate/new")
+//	public AuthenticationUser createNewUser(@RequestBody NewUserRequest newUserRequest) {
+////		System.out.println("Authenticate New");
+////		User newUser = new User();
+////		newUser.setUserid(newUserRequest.getUserid());
+////		newUser.setName(newUserRequest.getName());
+////		newUser.setPassword(bcryptgenerator.passwordEncoder(newUserRequest.getPassword()));
+////		newUser.setAge(newUserRequest.getAge());
+////		newUser.setRole(newUserRequest.getRole());
+////
+////		return userService.saveNewUser(newUser);
+//		
+//		
+//		AuthenticationUser newUser = new AuthenticationUser(newUserRequest.getUserid(), newUserRequest.getPassword(), "ROLE_USER");
+//		AuthenticationUser savedUser = userService.saveNewUser(newUser);
+//		
+//		if(!savedUser) {
+//			return 
+//		}
+//
+//	}
 
 	@GetMapping(value = "/authenticate/hello")
 	public String getHello() {

@@ -20,7 +20,6 @@ import lombok.Setter;
 public class User {
 	@Id
 	@Column(nullable = false, unique = true)
-	@NotNull
 	private String userid;
 	@Column(nullable = false)
 	private String password;

@@ -1,0 +1,45 @@
+package com.example.demo.service;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.AuthenticationUser;
+import com.example.demo.model.NewUserRequest;
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
+
+@Service
+public class UserService {
+	@Autowired
+	UserRepository userRepository;
+
+	public AuthenticationUser saveNewUser(AuthenticationUser newUser) {
+		AuthenticationUser user = userRepository.save(newUser);
+		return user;
+
+	}
+
+	public AuthenticationUser findById(String userid) {
+		AuthenticationUser user = userRepository.findByUserid(userid);
+		return user;
+	}
+
+//	public AuthenticationUser updateUser(@Valid NewUserRequest user) {
+//		
+//		AuthenticationUser userInDb = userRepository.findByUserid(user.getUserid());
+//		System.out.println(user.getName());
+//		userInDb.setName(user.getName());
+//		userInDb.setAge(user.getAge());
+//		userInDb.setPassword(user.getPassword());
+//		userInDb.setUserid(user.getUserid());
+//		System.out.println(userInDb.getName());
+//		System.out.println(userInDb.getAge());
+//		System.out.println(userInDb.getPassword());
+//		System.out.println(userInDb.getUserid());
+//		AuthenticationUser updatedUser = userRepository.save(userInDb);
+//		return updatedUser;
+//	}
+}
+
