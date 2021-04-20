@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.example.demo.model.AuthenticationUser;
 import com.example.demo.service.JwtUtilService;
 
 
@@ -31,12 +32,26 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 		
+		
+		
 		final String jwtToken = jwtUtilService.extractJwtFromRequest(request);
 		logger.info("request " + request);
 		logger.info("JWT TOKEN: " + jwtToken);
 		
+		
+		
+		logger.info("getRolesFromToken in doFilterInternal: " + jwtUtilService.getRolesFromToken(jwtToken));
+		
 		if (jwtToken != null && jwtUtilService.validateToken(jwtToken)) {
-			UserDetails userDetails = new User(jwtUtilService.getUseridFromToken(jwtToken), "", jwtUtilService.getRolesFromToken(jwtToken));
+			
+			AuthenticationUser loggedInUser = jwtUtilService.getLoggedInUser(request);
+			
+//			UserDetails userDetails = new User(jwtUtilService.getUseridFromToken(jwtToken), null, jwtUtilService.getRolesFromToken(jwtToken));
+
+//			logger.info(jwtUtilService.getRolesFromToken(jwtToken));
+			
+			UserDetails userDetails = new User(loggedInUser.getUserid(), loggedInUser.getPassword(), jwtUtilService.getRolesFromToken(jwtToken));
+
 			
 			logger.info("Inside JWT Request Filter");
 			
@@ -56,5 +71,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		filterChain.doFilter(request, response);
 		
+	}
+	
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+		if (request.getRequestURI().startsWith("/authenticate")) {
+			logger.info("context path starts with authenticate, shouldNotFilter returns true");
+			logger.info("context path: " + request.getRequestURI());
+			return true;
+		} else {
+			logger.info("context path: " + request.getRequestURI());
+			logger.info("context path does not start with authenticate, shouldNotFilter returns false");
+			return false;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -21,6 +23,8 @@ import com.example.demo.service.UserService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	private final org.slf4j.Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
 	@Autowired
 	UserDetailsServiceImpl myUserDetailsService;
@@ -41,15 +45,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-		return source;
-	}
+//	@Bean
+//	CorsConfigurationSource corsConfigurationSource() {
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+//		return source;
+//	}
 
 	@Bean
-	public BCryptPasswordEncoder createBCryptBean() {
+	public PasswordEncoder createBCryptBean() {
 		return new BCryptPasswordEncoder();
 	}
 
@@ -64,27 +68,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //        if (Boolean.parseBoolean(env.getRequiredProperty("security.disable.csrf")))
 //            httpSecurity.csrf().disable();
-
+//		.cors().disable()
+//      .httpBasic().disable()
+//      .formLogin().disable()
         httpSecurity
-//        		.cors().disable()
-//                .httpBasic().disable()
-//                .formLogin().disable()
         		.cors().and().csrf().disable()
         		.authorizeRequests()
-                .antMatchers("/authenticate/**").permitAll()
-                .antMatchers("/authenticate").permitAll()
-                .antMatchers("/verify").permitAll()
-                .antMatchers("/user/login").permitAll()
-                .antMatchers("/user/register").permitAll()
-                .antMatchers("/user/welcome").permitAll()
-//                .antMatchers(env.getRequiredProperty("security.uri.white-list").split(",")).permitAll()
-                .anyRequest().authenticated().and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandlerJwt).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                	.antMatchers("/authenticate").permitAll()
+                	.antMatchers("/authenticate/new").permitAll()
+                	.antMatchers("/verify").permitAll()
+                	.antMatchers("/user/login").permitAll()
+                	.antMatchers("/user/register").permitAll()
+                	.antMatchers("/user/**").hasRole("USER")
+                .anyRequest().permitAll().and()
+                	.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);//.and()
+//                .exceptionHandling().accessDeniedHandler(accessDeniedHandlerJwt).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
-        httpSecurity.cors(); // just added
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//        httpSecurity.cors(); // just added
+//        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 //	@Override
 //	protected void configure(HttpSecurity http) throws Exception {

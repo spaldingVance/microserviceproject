@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <libraryInfos>
-    <libraryInfo home="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home" version="1.8.0_275">
+    <libraryInfo home="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home" version="1.8.0_282">
         <bootpath>
             <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/resources.jar"/>
             <entry path="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/jre/lib/rt.jar"/>

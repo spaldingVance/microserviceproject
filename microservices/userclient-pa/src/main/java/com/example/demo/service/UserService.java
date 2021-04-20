@@ -18,6 +18,12 @@ public class UserService {
 		System.out.println("got to here");
 		System.out.println(newUser);
 		User user = userRepository.save(newUser);
+		if(user != null) {
+			System.out.println("successfully saved user in userclient");
+		} else {
+			System.out.println("error saving user");
+		}
+		
 		return user;
 
 	}

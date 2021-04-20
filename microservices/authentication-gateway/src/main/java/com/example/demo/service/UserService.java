@@ -25,20 +25,5 @@ public class UserService {
 		return user;
 	}
 
-//	public AuthenticationUser updateUser(@Valid NewUserRequest user) {
-//		
-//		AuthenticationUser userInDb = userRepository.findByUserid(user.getUserid());
-//		System.out.println(user.getName());
-//		userInDb.setName(user.getName());
-//		userInDb.setAge(user.getAge());
-//		userInDb.setPassword(user.getPassword());
-//		userInDb.setUserid(user.getUserid());
-//		System.out.println(userInDb.getName());
-//		System.out.println(userInDb.getAge());
-//		System.out.println(userInDb.getPassword());
-//		System.out.println(userInDb.getUserid());
-//		AuthenticationUser updatedUser = userRepository.save(userInDb);
-//		return updatedUser;
-//	}
 }
 

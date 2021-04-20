@@ -19,7 +19,7 @@ import com.example.demo.model.NewUserRequest;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 
-@CrossOrigin(origins = "http://localhost:9090")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("user")
 public class UserController {
