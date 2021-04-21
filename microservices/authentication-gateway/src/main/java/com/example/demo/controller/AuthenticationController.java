@@ -67,14 +67,6 @@ public class AuthenticationController {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					authenticationRequest.getUserid(), authenticationRequest.getPassword()));
-		
-		// encoding password from frontend. Need to encode on front end before sending. 
-		
-//		try {
-//			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-//					authenticationRequest.getUserid(), passEncoded));
-//			UsernamePasswordAuthenticationToken authReq
-//		      = new UsernamePasswordAuthenticationToken(authenticationRequest.getUserid(), authenticationRequest.getPassword());
 		} catch (DisabledException e) {
 			
 			throw new Exception("USER_DISABLED", e);
@@ -87,11 +79,6 @@ public class AuthenticationController {
 		final CurrentUser userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUserid());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-
-//		AuthenticationUser loggedUser = userRepository.findByUserid(authenticationRequest.getUserid());
-
-//		String name = loggedUser.getName();
-
 		String authority = "USER";
 		
 

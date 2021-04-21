@@ -1,9 +1,0 @@
-spring.application.name=authentication-client-pa
-server.port=8084
-logging.level.org.springframework.web:DEBUG
-spring.datasource.url=jdbc:derby:mydb;create=true
-spring.datasource.driver-class-name=org.apache.derby.jdbc.EmbeddedDriver
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.DerbyTenSevenDialect
-spring.jpa.hibernate.ddl-auto=update
-jwt.secret=secret
-jwt.jwtExpirationInMs=10000000
