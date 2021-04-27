@@ -102,7 +102,10 @@ public class JwtUtilService {
 	}
 
 	public String extractJwtFromRequest(HttpServletRequest request) {
+		logger.info("request in extractJwtFromRequest");
+		logger.info(request.toString());
 		String bearerToken = request.getHeader("Authorization");
+		logger.info("Header Names:" + request.getHeaderNames());
 		logger.info("bearer token: " + bearerToken);
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
 			return bearerToken.substring(7, bearerToken.length());
@@ -117,6 +120,18 @@ public class JwtUtilService {
 		logger.info("in getLoggedInUser() userid: " + userid);
 
 		AuthenticationUser user = userRepository.findByUserid(userid);
+		return user;
+	}
+	
+	public AuthenticationUser getLoggedInUserMap(HashMap<String, HashMap<String, String>> request) {
+		String auth = request.get("headers").get("Authorization");
+		String token = auth.substring(7, auth.length());
+		String userid = getUseridFromToken(token);
+		
+		logger.info("in getLoggedInUser() userid: " + userid);
+
+		AuthenticationUser user = userRepository.findByUserid(userid);
+		
 		return user;
 	}
 

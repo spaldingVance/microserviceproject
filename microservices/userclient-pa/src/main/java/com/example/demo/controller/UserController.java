@@ -28,12 +28,12 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/{userid}")
-	public ResponseEntity<?> getUser(@PathVariable @Valid String userid) {
+	public ResponseEntity<String> getUser(@PathVariable @Valid String userid) {
 		System.out.println("in get user");
 		System.out.println("Userid is : " + userid);
 		User user = userService.findById(userid);
 		if (user != null) {
-			return new ResponseEntity<User>(user, HttpStatus.OK);
+			return new ResponseEntity<String>(user.toString(), HttpStatus.OK);
 		} else {
 			System.out.println(user);
 //			return (ResponseEntity<?>) ResponseEntity.notFound();

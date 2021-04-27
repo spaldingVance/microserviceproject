@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -37,6 +38,9 @@ import com.example.demo.security.JwtRequestFilter;
 import com.example.demo.service.JwtUtilService;
 import com.example.demo.service.UserDetailsServiceImpl;
 import com.example.demo.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
@@ -128,7 +132,6 @@ public class AuthenticationController {
 							.headers(response.getHeaders()) //
 							.body(response.getBody()) //
 					);
-
 		} else {
 			logger.info("Error saving user to db");
 			return new ResponseEntity<String>("Error saving auth user to db", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -150,10 +153,12 @@ public class AuthenticationController {
 	}
 
 	// route to validate JWT from front end
-	@GetMapping(value = "/verify")
-	public ResponseEntity<String> getVerified(HttpServletRequest request) {
+//	@GetMapping(value = "/verify")
+	
+	@PostMapping(value = "/verify")
+	public ResponseEntity<String> getVerified(@RequestBody HashMap<String, HashMap<String, String>> request) {
 		logger.info("Inside Verify");
-		AuthenticationUser loggedInUser = jwtUtilService.getLoggedInUser(request);
+		AuthenticationUser loggedInUser = jwtUtilService.getLoggedInUserMap(request);
 
 		return ResponseEntity.ok(loggedInUser.getRole());
 	}
