@@ -53,25 +53,6 @@ public class LoadbalancerApplication {
 		SpringApplication.run(LoadbalancerApplication.class, args);
 	}
 
-//	@RequestMapping("/hi")
-//	public Mono<String> hi(@RequestParam(value = "name", defaultValue = "Mary") String name) {
-//		return loadBalancedWebClientBuilder.build().get().uri("http://say-hello/greeting").retrieve()
-//				.bodyToMono(String.class).map(greeting -> String.format("%s, %s!", greeting, name));
-//	}
-//
-//	@RequestMapping("/authenticate")
-//	public Mono<String> createAuthenticationToken(String authenticationRequest) {
-//		logger.info("inside authenticate");
-//		logger.info(authenticationRequest);
-//		return loadBalancedWebClientBuilder.build().post().uri("http://authentication-gateway/authenticate")
-//				.retrieve()
-//				.bodyToMono(String.class);
-////		return loadBalancedWebClientBuilder.build().post().uri("http://authentication-gateway/authenticate")
-////				.accept(MediaType.ALL)
-////				.exchangeToMono(clientResponse -> clientResponse.bodyToMono(ResponseEntity.class));
-////				
-//
-//	}
 	
 	@PostMapping("/authenticate")
 	public Mono<String> createAuthenticationToken(
@@ -83,10 +64,10 @@ public class LoadbalancerApplication {
 	}
 	
 	@GetMapping("/user/{userId}")
-	public Mono<String> getUser(@PathVariable String userId) {
+	public Mono<String> getUser(@PathVariable String userId ) {
 		
 		return loadBalancedWebClientBuilder.build().get().uri("http://authentication-gateway/user/" + userId)
-				.accept(MediaType.ALL)
+
 				.retrieve()
 				.bodyToMono(String.class);
 	}
@@ -100,9 +81,6 @@ public class LoadbalancerApplication {
 	@PostMapping("/verify")
 	public Mono<String> getVerified(@RequestBody String request) throws JsonMappingException, JsonProcessingException {
 		logger.info("verify in loadbalancer");
-//		logger.info(request.toString());
-//		ObjectMapper mapper = new ObjectMapper();
-//		logger.info("after new objectmapper()");
 		HashMap<String,HashMap<String, String>> req;
 		logger.info("req created");
 		
@@ -110,24 +88,8 @@ public class LoadbalancerApplication {
 		
 		logger.info("deserialized object");
 		logger.info(req.get("headers").get("Authorization"));
-//		props = (HashMap<String,Object>) new ObjectMapper().readValue(request, HashMap.class);
 
-//		mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-//		mapper.read
-//		HttpHeaders req = mapper.readValue(request, HttpHeaders.class);
-//		Map<String, String> req = mapper.readValue(request, Map.class);
-
-		logger.info("successfully deserialized request");
-//		logger.info(req.get("Authorization").toString());
-//		HttpHeaders headers = req.getHeaders();
-//		logger.info("line 102 loadbalancer");
-//		logger.info(headers.get("authorization").toString());
-//		logger.info("request: " + request);
-//		logger.info("headers " + req.("Authorization") );
-//		req.get("headers").get(0);
-	//	req.getHeaders().
-	
-		
+		logger.info("successfully deserialized request");		
 		return loadBalancedWebClientBuilder.build().post().uri("http://authentication-gateway/verify")
 				.body(Mono.just(req), HashMap.class)
 				.header("Authorization", req.get("headers").get("Authorization"))

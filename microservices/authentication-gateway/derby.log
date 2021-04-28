@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Tue Apr 27 12:24:54 EDT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0179-1425-d3df-00000b2d1120 
+Tue Apr 27 14:58:16 EDT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0179-14b2-3c18-000010ee6010 
 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway/authuser with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
 Loaded from file:/Users/spaldingvance/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Oracle Corporation
@@ -12,9 +12,9 @@ os.version=10.16
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Tue Apr 27 12:29:22 EDT 2021:
-Shutting down instance a816c00e-0179-1425-d3df-00000b2d1120 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway/authuser with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
-Tue Apr 27 12:29:22 EDT 2021 Thread[Thread-20,5,main] Cleanup action starting
+Wed Apr 28 08:50:43 EDT 2021:
+Shutting down instance a816c00e-0179-14b2-3c18-000010ee6010 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway/authuser with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
+Wed Apr 28 08:50:44 EDT 2021 Thread[Thread-52,5,main] Cleanup action starting
 ERROR XBM0I: Directory authuser cannot be removed.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
@@ -34,7 +34,7 @@ ERROR XBM0I: Directory authuser cannot be removed.
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at java.base/java.lang.Thread.run(Thread.java:834)
 Cleanup action completed
-Tue Apr 27 12:29:22 EDT 2021 Thread[Thread-20,5,main] Cleanup action starting
+Wed Apr 28 08:50:44 EDT 2021 Thread[Thread-52,5,main] Cleanup action starting
 ERROR XBM0I: Directory authuser cannot be removed.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
@@ -55,8 +55,8 @@ ERROR XBM0I: Directory authuser cannot be removed.
 	at java.base/java.lang.Thread.run(Thread.java:834)
 Cleanup action completed
 ----------------------------------------------------------------
-Tue Apr 27 12:29:26 EDT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance 888c4022-0179-1425-d3df-00000b2d1120 
+Wed Apr 28 08:50:47 EDT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance 48d7402a-0179-14b2-3c18-000010ee6010 
 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway/authuser with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
 Loaded from file:/Users/spaldingvance/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Oracle Corporation
@@ -68,9 +68,9 @@ os.version=10.16
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Tue Apr 27 13:46:57 EDT 2021:
-Shutting down instance 888c4022-0179-1425-d3df-00000b2d1120 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway/authuser with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
-Tue Apr 27 13:46:58 EDT 2021 Thread[Thread-57,5,main] Cleanup action starting
+Wed Apr 28 08:50:49 EDT 2021:
+Shutting down instance 48d7402a-0179-14b2-3c18-000010ee6010 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway/authuser with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
+Wed Apr 28 08:50:50 EDT 2021 Thread[Thread-70,5,main] Cleanup action starting
 ERROR XBM0I: Directory authuser cannot be removed.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
@@ -90,7 +90,63 @@ ERROR XBM0I: Directory authuser cannot be removed.
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at java.base/java.lang.Thread.run(Thread.java:834)
 Cleanup action completed
-Tue Apr 27 13:46:58 EDT 2021 Thread[Thread-57,5,main] Cleanup action starting
+Wed Apr 28 08:50:50 EDT 2021 Thread[Thread-70,5,main] Cleanup action starting
+ERROR XBM0I: Directory authuser cannot be removed.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.removePersistentService(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection$6.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.jdbc.EmbedConnection.removePersistentService(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.jdbc.InternalDriver.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver$LoginCallable.call(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver$LoginCallable.call(Unknown Source)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Cleanup action completed
+----------------------------------------------------------------
+Wed Apr 28 08:50:53 EDT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance 018f0039-0179-14b2-3c18-000010ee6010 
+on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway/authuser with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
+Loaded from file:/Users/spaldingvance/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=11.0.9+7-LTS
+user.dir=/Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.16
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Apr 28 09:25:38 EDT 2021:
+Shutting down instance 018f0039-0179-14b2-3c18-000010ee6010 on database directory /Users/spaldingvance/Desktop/MS-project-current/microservices/authentication-gateway/authuser with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4b85612c 
+Wed Apr 28 09:25:38 EDT 2021 Thread[Thread-97,5,main] Cleanup action starting
+ERROR XBM0I: Directory authuser cannot be removed.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
+	at org.apache.derby.iapi.services.monitor.Monitor.removePersistentService(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection$6.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.impl.jdbc.EmbedConnection.removePersistentService(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at org.apache.derby.jdbc.InternalDriver.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver$LoginCallable.call(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver$LoginCallable.call(Unknown Source)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Cleanup action completed
+Wed Apr 28 09:25:38 EDT 2021 Thread[Thread-97,5,main] Cleanup action starting
 ERROR XBM0I: Directory authuser cannot be removed.
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)

@@ -6340,3 +6340,120 @@ java.lang.InterruptedException
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 12:26:27.856
 !MESSAGE executing callback sts4.classpath.cKLCruVM SUCCESS [done]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 14:59:49.526
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.cKLCruVM
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 14:59:49.527
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.cKLCruVM
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 14:59:49.527
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 14:59:49.527
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.cKLCruVM => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:40.168
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:40.168
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@72259917[org.springframework.tooling.boot.ls:1.24.0.202012131915(id=573)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:40.168
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.726
+!MESSAGE Boot LS startup time from start to initialized: 1556ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.789
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.VJLruHXMisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.789
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.789
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.790
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.790
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.VJLruHXM => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.790
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.823
+!MESSAGE classpath=173 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.825
+!MESSAGE buffering callback sts4.classpath.VJLruHXM authentication-gateway false 173
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.825
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.836
+!MESSAGE classpath=134 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.837
+!MESSAGE buffering callback sts4.classpath.VJLruHXM api-gateway-pa false 134
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.838
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.840
+!MESSAGE classpath=172 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.841
+!MESSAGE buffering callback sts4.classpath.VJLruHXM authentication-client-pa false 172
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.841
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.846
+!MESSAGE classpath=109 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.847
+!MESSAGE buffering callback sts4.classpath.VJLruHXM esclient false 109
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.847
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.852
+!MESSAGE classpath=132 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.853
+!MESSAGE buffering callback sts4.classpath.VJLruHXM loadbalancer false 132
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.853
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.854
+!MESSAGE classpath=158 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.855
+!MESSAGE buffering callback sts4.classpath.VJLruHXM payrollclient-pa false 158
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.855
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.860
+!MESSAGE classpath=136 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.860
+!MESSAGE buffering callback sts4.classpath.VJLruHXM service-registration-and-discovery-service false 136
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.860
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.862
+!MESSAGE classpath=158 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.863
+!MESSAGE buffering callback sts4.classpath.VJLruHXM userclient-pa false 158
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.863
+!MESSAGE executing callback sts4.classpath.VJLruHXM 8 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-27 15:00:41.906
+!MESSAGE executing callback sts4.classpath.VJLruHXM SUCCESS [done]

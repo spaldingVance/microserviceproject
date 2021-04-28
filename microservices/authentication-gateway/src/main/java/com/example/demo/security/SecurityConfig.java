@@ -45,12 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-//	@Bean
-//	CorsConfigurationSource corsConfigurationSource() {
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-//		return source;
-//	}
 
 	@Bean
 	public PasswordEncoder createBCryptBean() {
@@ -66,11 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-//        if (Boolean.parseBoolean(env.getRequiredProperty("security.disable.csrf")))
-//            httpSecurity.csrf().disable();
-//		.cors().disable()
-//      .httpBasic().disable()
-//      .formLogin().disable()
         httpSecurity
         		.cors().and().csrf().disable()
         		.authorizeRequests()
@@ -83,30 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll().and()
                 	.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);//.and()
-//                .exceptionHandling().accessDeniedHandler(accessDeniedHandlerJwt).and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        
-//        httpSecurity.cors(); // just added
-//        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//
-//		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/user/login").permitAll()
-//				.antMatchers("/user/register").permitAll()
-//				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//				.antMatchers(HttpMethod.POST, "/authenticate/**").permitAll()
-//				.antMatchers(HttpMethod.POST, "/verify/**").permitAll()
-//				.antMatchers("/user/**").hasRole("USER")
-//				.anyRequest().authenticated()
-//				.and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
-//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//			
-//
-//		http.cors();
-//
-//		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//	}
+
 
 }
