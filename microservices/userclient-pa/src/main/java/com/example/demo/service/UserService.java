@@ -16,7 +16,7 @@ public class UserService {
 
 	public User saveNewUser(User newUser) {
 		System.out.println("got to here");
-		System.out.println(newUser);
+		System.out.println(newUser.getUserid());
 		User user = userRepository.save(newUser);
 		if(user != null) {
 			System.out.println("successfully saved user in userclient");
@@ -30,6 +30,8 @@ public class UserService {
 
 	public User findById(String userid) {
 		User user = userRepository.findByUserid(userid);
+		System.out.println("Found User " + userid);
+		System.out.println(user.getAge());
 		return user;
 	}
 

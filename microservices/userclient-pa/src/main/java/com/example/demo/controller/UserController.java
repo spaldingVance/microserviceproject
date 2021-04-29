@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.NewUserRequest;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,25 +31,26 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/{userid}")
-	public ResponseEntity<String> getUser(@PathVariable @Valid String userid) {
+	public ResponseEntity<?> getUser(@PathVariable @Valid String userid) {
 		System.out.println("in get user");
 		System.out.println("Userid is : " + userid);
 		User user = userService.findById(userid);
-		if (user != null) {
-			return new ResponseEntity<String>(user.toString(), HttpStatus.OK);
-		} else {
-			System.out.println(user);
-//			return (ResponseEntity<?>) ResponseEntity.notFound();
-			return new ResponseEntity<String>("Error", HttpStatus.NOT_FOUND);
-		}
+		System.out.println(user.getName());
+//		System.out.println(user.toString());
+	
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 		
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> registerUser(@RequestBody @Valid User user) {
+	public ResponseEntity<String> registerUser(@RequestBody String userRequest) throws JsonMappingException, JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		User userReq = mapper.readValue(userRequest, User.class);
+		
 		System.out.println("at /user/register");
-		System.out.println(user.getUserid());
-		User registeredUser = userService.saveNewUser(user);
+//		System.out.println(user.getUserid());
+		
+		User registeredUser = userService.saveNewUser(userReq);
 		
 		if(registeredUser != null) {
 			return new ResponseEntity<String>("Successfully registered", HttpStatus.OK);
@@ -73,17 +77,21 @@ public class UserController {
 	}
 	
 	@PostMapping("/update")
-	public ResponseEntity<String> updateUser(@Valid @RequestBody NewUserRequest userRequest) {
-		User user = userService.findById(userRequest.getUserid());
+//	public ResponseEntity<String> updateUser(@Valid @RequestBody NewUserRequest userRequest) {
+	public ResponseEntity<String> updateUser(@Valid @RequestBody String userRequest) throws JsonMappingException, JsonProcessingException {
 		System.out.println("IN /user/update route");
-		System.out.println("Userid: " + userRequest.getUserid());
-		User registeredUser = userService.updateUser(userRequest);
+		ObjectMapper mapper = new ObjectMapper();
+//		User user = mapper.readValue(authenticationRequest, AuthenticationRequest.class);
+		NewUserRequest userReq = mapper.readValue(userRequest, NewUserRequest.class);
+		User user = userService.findById(userReq.getUserid());
+
+		System.out.println("Userid: " + userReq.getUserid());
+		User registeredUser = userService.updateUser(userReq);
 		if(registeredUser != null) {
 			return new ResponseEntity<String>("User Updated", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
 	}
 	
 

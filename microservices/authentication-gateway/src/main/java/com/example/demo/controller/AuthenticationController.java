@@ -76,35 +76,69 @@ public class AuthenticationController {
 	private JwtUtilService jwtUtilService;
 
 	// route for User login into Auth gateway
+//	@PostMapping("/authenticate")
+//	public ResponseEntity<Map<String, String>> createAuthenticationToken(
+//			@RequestBody String authenticationRequest) throws Exception {
+//		ObjectMapper mapper = new ObjectMapper();
+//		AuthenticationRequest authRequest = mapper.readValue(authenticationRequest, AuthenticationRequest.class);
+//		logger.info("inside authenticate");
+//
+//		try {
+//			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+//					authRequest.getUserid(), authRequest.getPassword()));
+//		} catch (DisabledException e) {
+//			throw new Exception("USER_DISABLED", e);
+//		} catch (BadCredentialsException e) {
+//			throw new Exception("INVALID_CREDENTIALS", e);
+//		}
+//
+//		final CurrentUser userDetails = myUserDetailsService.loadUserByUsername(authRequest.getUserid());
+//		final String token = jwtTokenUtil.generateToken(userDetails);
+//
+//		// hard coding USER authority
+//		String authority = "USER";
+//
+//		Map<String, String> response = new HashMap<>();
+//		response.put("token", token);
+//		response.put("credentials", authority);
+//		
+//		logger.info("RESPONSE: ");
+//		logger.info(response.toString());
+//		logger.info(response.getClass().getName());
+//
+//		return ResponseEntity.ok(response);
+//	}
+	
 	@PostMapping("/authenticate")
-	public ResponseEntity<Map<String, String>> createAuthenticationToken(
-			@RequestBody String authenticationRequest) throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
-		AuthenticationRequest authRequest = mapper.readValue(authenticationRequest, AuthenticationRequest.class);
-		logger.info("inside authenticate");
+	public ResponseEntity<Map<String, String>> createAuthenticationToken( @RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+		logger.info("Made it to /authenticate ~~~~~~~");
+		logger.info(authenticationRequest.getUserid());
+		logger.info(authenticationRequest.getPassword());
+		
+		String passEncoded = bcryptgenerator.passwordEncoder(authenticationRequest.getPassword());
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-					authRequest.getUserid(), authRequest.getPassword()));
+					authenticationRequest.getUserid(), authenticationRequest.getPassword()));
 		} catch (DisabledException e) {
+			
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
 			throw new Exception("INVALID_CREDENTIALS", e);
 		}
 
-		final CurrentUser userDetails = myUserDetailsService.loadUserByUsername(authRequest.getUserid());
-		final String token = jwtTokenUtil.generateToken(userDetails);
+		final CurrentUser userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUserid());
 
-		// hard coding USER authority
-		String authority = "USER";
+		final String token = jwtTokenUtil.generateToken(userDetails);
+		String authority = "USER";	
 
 		Map<String, String> response = new HashMap<>();
 		response.put("token", token);
+//		response.put("name", name);
 		response.put("credentials", authority);
-		
-		logger.info("RESPONSE: ");
-		logger.info(response.toString());
-		logger.info(response.getClass().getName());
+
+		logger.info("response: " + response);
+		logger.info("token: " + token);
 
 		return ResponseEntity.ok(response);
 	}
@@ -112,7 +146,12 @@ public class AuthenticationController {
 	// route for getting a user's information
 	@GetMapping("/user/{userId}")
 	public ResponseEntity<?> getUser(ProxyExchange<byte[]> proxy, @PathVariable String userId) throws Exception {
-		return proxy.uri("http://localhost:8083/user/" + userId).get();
+		logger.info("Inside get user loadbalancer route");
+		return proxy.uri("http://localhost:8080/user/" + userId)
+				.get(response -> ResponseEntity.status(response.getStatusCode()) //
+				.headers(response.getHeaders()) //
+				.body(response.getBody()) //
+		);
 	}
 
 	// route for registering a new user into the authentication database
@@ -127,7 +166,7 @@ public class AuthenticationController {
 		if (savedUser != null) {
 			logger.info("successfull saved user");
 			logger.info("Redirecting");
-			return proxy.uri("http://localhost:8083/user/register")
+			return proxy.uri("http://localhost:8080/user/register")
 					.post(response -> ResponseEntity.status(response.getStatusCode()) //
 							.headers(response.getHeaders()) //
 							.body(response.getBody()) //
@@ -142,24 +181,34 @@ public class AuthenticationController {
 	// route for updating a user's information
 	@PostMapping("/user/update")
 	public ResponseEntity<?> updateUser(ProxyExchange<byte[]> proxy) throws Exception {
-		return proxy.uri("http://localhost:8083/user/update").post();
+//		return proxy.uri("http://localhost:8083/user/update").post();
+		return proxy.uri("http://localhost:8080/user/update").post();
+		
 	}
 
 	// route for displaying a message on the /user/welcome page indicate a
 	// successful login
 	@RequestMapping("/user/welcome")
 	public ResponseEntity<?> welcome(ProxyExchange<byte[]> proxy) throws Exception {
-		return proxy.uri("http://localhost:8083/user/welcome").get();
+		return proxy.uri("http://localhost:8080/user/welcome").get();
 	}
 
 	// route to validate JWT from front end
 //	@GetMapping(value = "/verify")
 	
-	@PostMapping(value = "/verify")
-	public ResponseEntity<String> getVerified(@RequestBody HashMap<String, HashMap<String, String>> request) {
+//	@PostMapping(value = "/verify")
+//	public ResponseEntity<String> getVerified(@RequestBody HashMap<String, HashMap<String, String>> request) {
+//		logger.info("Inside Verify");
+//		AuthenticationUser loggedInUser = jwtUtilService.getLoggedInUserMap(request);
+//
+//		return ResponseEntity.ok(loggedInUser.getRole());
+//	}
+	
+	@GetMapping(value = "/verify")
+	public ResponseEntity<String> getVerified(HttpServletRequest request) {
 		logger.info("Inside Verify");
-		AuthenticationUser loggedInUser = jwtUtilService.getLoggedInUserMap(request);
-
+		AuthenticationUser loggedInUser = jwtUtilService.getLoggedInUser(request);
+		
 		return ResponseEntity.ok(loggedInUser.getRole());
 	}
 
