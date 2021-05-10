@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class PayrollDTO {
 	
 	private String userid;
-	private String password;
+	private String department;
+	private String salary;
 	
 }

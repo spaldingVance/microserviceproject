@@ -43,12 +43,12 @@ public class LoadbalancerApplication {
 	
 
 	private final WebClient.Builder loadBalancedWebClientBuilder;
-	private final ReactorLoadBalancerExchangeFilterFunction lbFunction;
+//	private final ReactorLoadBalancerExchangeFilterFunction lbFunction;
 
 	public LoadbalancerApplication(WebClient.Builder webClientBuilder,
 			ReactorLoadBalancerExchangeFilterFunction lbFunction) {
 		this.loadBalancedWebClientBuilder = webClientBuilder;
-		this.lbFunction = lbFunction;
+//		this.lbFunction = lbFunction;
 	}
 
 	public static void main(String[] args) {
@@ -57,57 +57,30 @@ public class LoadbalancerApplication {
 
 	
 	@PostMapping("/user/update")
-	public Mono<String> updateUser(@RequestBody String userRequest) {
+	public Mono<String> updateUser(@RequestBody User userRequest) {
 		logger.info("Inside user/update");
 		return loadBalancedWebClientBuilder.build().post().uri("http://USER-CLIENT-PA/user/update")
-				.body(Mono.just(userRequest), String.class)
+				.body(Mono.just(userRequest), User.class)
 				.retrieve()
 				.bodyToMono(String.class);
 	}
 	
 
 	@GetMapping("/user/{userId}")
-	public Mono<User> getUser(@PathVariable String userId ) {
+	public Mono<String> getUser(@PathVariable String userId ) {
 		logger.info("get user route in loadbalancer");
 		return loadBalancedWebClientBuilder.build().get().uri("http://USER-CLIENT-PA/user/" + userId)
-				.retrieve()
-				.bodyToMono(User.class);
-	}
-	
-	@PostMapping("/user/register")
-//	public Mono<String> registerUser(@RequestBody @Valid User user) {
-	public Mono<String> registerUser(@RequestBody String user) {
-		return loadBalancedWebClientBuilder.build().post().uri("http://USER-CLIENT-PA/user/register")
-				.body(Mono.just(user), String.class)
 				.retrieve()
 				.bodyToMono(String.class);
 	}
 	
-	
-	
-//	@PostMapping("/authenticate/new")
-	
-
-	
-//	@RequestMapping("/user/welcome")
-
-//	@PostMapping("/verify")
-//	public Mono<String> getVerified(@RequestBody String request) throws JsonMappingException, JsonProcessingException {
-//		logger.info("verify in loadbalancer");
-//		HashMap<String,HashMap<String, String>> req;
-//		logger.info("req created");
-//		
-//		req = new ObjectMapper().readValue(request, new TypeReference<HashMap<String, HashMap<String, String>>>() {});
-//		
-//		logger.info("deserialized object");
-//		logger.info(req.get("headers").get("Authorization"));
-//
-//		logger.info("successfully deserialized request");		
-//		return loadBalancedWebClientBuilder.build().post().uri("http://authentication-gateway/verify")
-//				.body(Mono.just(req), HashMap.class)
-//				.header("Authorization", req.get("headers").get("Authorization"))
-//				.retrieve()
-//				.bodyToMono(String.class);
-//	}
+	@PostMapping("/user/register")
+//	public Mono<String> registerUser(@RequestBody @Valid User user) {
+	public Mono<String> registerUser(@RequestBody User user) {
+		return loadBalancedWebClientBuilder.build().post().uri("http://USER-CLIENT-PA/user/register")
+				.body(Mono.just(user), User.class)
+				.retrieve()
+				.bodyToMono(String.class);
+	}
 
 }

@@ -15,9 +15,19 @@ public class UserService {
 	UserRepository userRepository;
 
 	public AuthenticationUser saveNewUser(AuthenticationUser newUser) {
+		if(userRepository.existsById(newUser.getUserid())) {
+			return null;
+		}
 		AuthenticationUser user = userRepository.save(newUser);
 		return user;
 
+	}
+	
+	public AuthenticationUser saveUser(AuthenticationUser user) {
+		AuthenticationUser dbUser = userRepository.findByUserid(user.getUserid());
+		dbUser.setPassword(user.getPassword());
+		dbUser.setRole(user.getRole());
+		return userRepository.save(dbUser);
 	}
 
 	public AuthenticationUser findById(String userid) {

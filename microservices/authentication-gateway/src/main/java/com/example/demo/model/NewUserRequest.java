@@ -16,6 +16,8 @@ public class NewUserRequest {
 	private String name;
 	private int age;
 	private String role;
+	private String department;
+	private String salary;
 	
 
 }

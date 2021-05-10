@@ -16,6 +16,30 @@ public class NewUserRequest {
 	private String name;
 	private int age;
 	private String role;
+	private String department;
+	private String salary;
+	
+	public NewUserRequest(User user, PayrollDTO payroll) {
+		this.userid = user.getUserid();
+		this.password = user.getPassword();
+		this.name = user.getName();
+		this.age = user.getAge();
+		this.role = user.getRole();
+		this.department = payroll.getDepartment();
+		this.salary = payroll.getSalary();
+	}
+	
+//	public static NewUserRequest createNewUserRequest(User user, PayrollDTO payroll) {
+//		NewUserRequest newUserRequest = new NewUserRequest();
+//		newUserRequest.setDepartment(payroll.getDepartment());
+//		newUserRequest.setSalary(payroll.getSalary());
+//		newUserRequest.setUserid(user.getUserid());
+//		newUserRequest.setPassword(user.getPassword());
+//		newUserRequest.setName(user.getName());
+//		newUserRequest.setAge(user.getAge());
+//		newUserRequest.setRole(user.getRole());
+//		return newUserRequest;
+//	}
 	
 
 }

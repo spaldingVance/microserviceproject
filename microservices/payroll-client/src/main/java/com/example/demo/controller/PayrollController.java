@@ -34,39 +34,36 @@ public class PayrollController {
 	public ResponseEntity<?> getPayroll(@PathVariable @Valid String userid) {
 		Payroll payroll = payrollService.findById(userid);
 		
+		System.out.println("at /payroll/{userid}");
+
+		
 		return new ResponseEntity<Payroll>(payroll, HttpStatus.OK);
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> registerUser(@RequestBody String payrollRequest) throws JsonMappingException, JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		Payroll payrollReq = mapper.readValue(payrollRequest, Payroll.class);
-		
-		System.out.println("at /user/register");
-//		System.out.println(user.getUserid());
-		
-		Payroll registeredPayroll = payrollService.saveNewPayroll(payrollReq);
+	public ResponseEntity<Payroll> registerUser(@RequestBody NewPayrollRequest payrollRequest) throws JsonMappingException, JsonProcessingException {
+	
+		Payroll registeredPayroll = payrollService.saveNewPayroll(payrollRequest);
 		
 		if(registeredPayroll != null) {
-			return new ResponseEntity<String>("Successfully registered in payroll service", HttpStatus.OK);
+			return new ResponseEntity<Payroll>(registeredPayroll, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Payroll>(registeredPayroll, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PostMapping("/update")
-	public ResponseEntity<String> updatePayroll(@Valid @RequestBody String payrollRequest) throws JsonMappingException, JsonProcessingException {
+	public ResponseEntity<Payroll> updatePayroll(@Valid @RequestBody NewPayrollRequest payrollRequest) throws JsonMappingException, JsonProcessingException {
 
-		ObjectMapper mapper = new ObjectMapper();
-		
-		NewPayrollRequest payrollReq = mapper.readValue(payrollRequest, NewPayrollRequest.class);
-		Payroll payroll = payrollService.findById(payrollReq.getUserid());
+		Payroll payroll = payrollService.findById(payrollRequest.getUserid());
+		payroll.setDepartment(payrollRequest.getDepartment());
+		payroll.setSalary(payrollRequest.getSalary());
 
-		Payroll updatedPayroll = payrollService.updatePayroll(payrollReq);
+		Payroll updatedPayroll = payrollService.updatePayroll(payroll);
 		if(updatedPayroll != null) {
-			return new ResponseEntity<String>("Payroll Updated", HttpStatus.OK);
+			return new ResponseEntity<Payroll>(updatedPayroll, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Payroll>(updatedPayroll, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

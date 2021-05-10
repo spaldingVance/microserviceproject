@@ -75,39 +75,6 @@ public class AuthenticationController {
 	@Autowired
 	private JwtUtilService jwtUtilService;
 
-	// route for User login into Auth gateway
-//	@PostMapping("/authenticate")
-//	public ResponseEntity<Map<String, String>> createAuthenticationToken(
-//			@RequestBody String authenticationRequest) throws Exception {
-//		ObjectMapper mapper = new ObjectMapper();
-//		AuthenticationRequest authRequest = mapper.readValue(authenticationRequest, AuthenticationRequest.class);
-//		logger.info("inside authenticate");
-//
-//		try {
-//			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-//					authRequest.getUserid(), authRequest.getPassword()));
-//		} catch (DisabledException e) {
-//			throw new Exception("USER_DISABLED", e);
-//		} catch (BadCredentialsException e) {
-//			throw new Exception("INVALID_CREDENTIALS", e);
-//		}
-//
-//		final CurrentUser userDetails = myUserDetailsService.loadUserByUsername(authRequest.getUserid());
-//		final String token = jwtTokenUtil.generateToken(userDetails);
-//
-//		// hard coding USER authority
-//		String authority = "USER";
-//
-//		Map<String, String> response = new HashMap<>();
-//		response.put("token", token);
-//		response.put("credentials", authority);
-//		
-//		logger.info("RESPONSE: ");
-//		logger.info(response.toString());
-//		logger.info(response.getClass().getName());
-//
-//		return ResponseEntity.ok(response);
-//	}
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<Map<String, String>> createAuthenticationToken( @RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -153,6 +120,17 @@ public class AuthenticationController {
 				.body(response.getBody()) //
 		);
 	}
+	
+	// route for getting a user's information
+		@GetMapping("/payroll/{userId}")
+		public ResponseEntity<?> getPayroll(ProxyExchange<byte[]> proxy, @PathVariable String userId) throws Exception {
+			logger.info("Inside get payroll loadbalancer route");
+			return proxy.uri("http://localhost:8080/payroll/" + userId)
+					.get(response -> ResponseEntity.status(response.getStatusCode()) //
+					.headers(response.getHeaders()) //
+					.body(response.getBody()) //
+			);
+		}
 
 	// route for registering a new user into the authentication database
 	@PostMapping("/authenticate/new")
@@ -167,9 +145,8 @@ public class AuthenticationController {
 			logger.info("successfull saved user");
 			logger.info("Redirecting");
 			return proxy.uri("http://localhost:8080/user/register")
-					.post(response -> ResponseEntity.status(response.getStatusCode()) //
-							.headers(response.getHeaders()) //
-							.body(response.getBody()) //
+					.post(response -> ResponseEntity.status(response.getStatusCode()) 
+							.body(newUserRequest) 
 					);
 		} else {
 			logger.info("Error saving user to db");
@@ -180,11 +157,25 @@ public class AuthenticationController {
 
 	// route for updating a user's information
 	@PostMapping("/user/update")
-	public ResponseEntity<?> updateUser(ProxyExchange<byte[]> proxy) throws Exception {
-//		return proxy.uri("http://localhost:8083/user/update").post();
-		return proxy.uri("http://localhost:8080/user/update").post();
+	public ResponseEntity<?> updateUser(ProxyExchange<byte[]> proxy, @RequestBody NewUserRequest newUserRequest) throws Exception {
+		String passEncoded = bcryptgenerator.passwordEncoder(newUserRequest.getPassword());
+		AuthenticationUser newUser = new AuthenticationUser(newUserRequest.getUserid(), passEncoded, newUserRequest.getRole());
+		
+		AuthenticationUser savedUser = userService.saveNewUser(newUser);
+		
+		
+		return proxy.uri("http://localhost:8080/user/update")
+				.post(response -> ResponseEntity.status(response.getStatusCode()) 
+						.body(newUserRequest) 
+				);
 		
 	}
+	
+	@PostMapping("/payroll/update")
+	public ResponseEntity<?> updatePayroll(ProxyExchange<byte[]> proxy) throws Exception {
+		return proxy.uri("http://localhost:8080/payroll/update").post();
+	}
+	
 
 	// route for displaying a message on the /user/welcome page indicate a
 	// successful login
@@ -193,16 +184,6 @@ public class AuthenticationController {
 		return proxy.uri("http://localhost:8080/user/welcome").get();
 	}
 
-	// route to validate JWT from front end
-//	@GetMapping(value = "/verify")
-	
-//	@PostMapping(value = "/verify")
-//	public ResponseEntity<String> getVerified(@RequestBody HashMap<String, HashMap<String, String>> request) {
-//		logger.info("Inside Verify");
-//		AuthenticationUser loggedInUser = jwtUtilService.getLoggedInUserMap(request);
-//
-//		return ResponseEntity.ok(loggedInUser.getRole());
-//	}
 	
 	@GetMapping(value = "/verify")
 	public ResponseEntity<String> getVerified(HttpServletRequest request) {

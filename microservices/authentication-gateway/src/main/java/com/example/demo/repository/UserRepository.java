@@ -10,5 +10,7 @@ import com.example.demo.model.AuthenticationUser;
 public interface UserRepository extends CrudRepository<AuthenticationUser, String>{
 
 	AuthenticationUser findByUserid(String userid);
+	
+	AuthenticationUser save(AuthenticationUser user);
 
 }
