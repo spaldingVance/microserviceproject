@@ -34,31 +34,15 @@ public class UserController {
 
 	@GetMapping("/{userid}")
 	public ResponseEntity<?> getUser(@PathVariable @Valid String userid) {
-		System.out.println("in get user");
-		System.out.println("Userid is : " + userid);
 		NewUserRequest user = userService.findById(userid);
-		System.out.println(user.getSalary());
-//		System.out.println(user.toString());
-//		PayrollDTO payroll = userService.getPayroll(userid);
-
-//		NewUserRequest newUserRequest = new NewUserRequest(user, payroll);
-
+		
 		return new ResponseEntity<NewUserRequest>(user, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/register")
-//	public ResponseEntity<String> registerUser(@RequestBody String userRequest) throws JsonMappingException, JsonProcessingException {
 	public ResponseEntity<String> registerUser(@RequestBody NewUserRequest userRequest)
 			throws JsonMappingException, JsonProcessingException {
-//
-//		ObjectMapper mapper = new ObjectMapper();
-//		User userReq = mapper.readValue(userRequest, User.class);
-
-//		System.out.println("at /user/register");
-//		System.out.println(user.getUserid());
-		
-		User user = new User(userRequest.getUserid(), userRequest.getPassword(), userRequest.getName(), userRequest.getAge(), userRequest.getRole());
 
 		NewUserRequest registeredUser = userService.saveNewUser(userRequest);
 
@@ -69,34 +53,9 @@ public class UserController {
 		}
 	}
 
-//	@PostMapping("/login")
-//	public ResponseEntity<String> loginUser(@Valid User user) {
-//		System.out.println("Logging in~~~~~");
-//		User UseridExists = userService.findById(user.getUserid());
-//
-//		String existingPassword = UseridExists.getPassword();
-//		String currentPassword = user.getPassword();
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-////		return passwordEncoder.matches(currentPassword, ExistingPassword);
-//
-//		if (passwordEncoder.matches(currentPassword, existingPassword)) {
-//			return new ResponseEntity<String>("Logged In Successfully", HttpStatus.OK);
-//		} else {
-//			return new ResponseEntity<String>("Incorrect Username or Password", HttpStatus.UNAUTHORIZED);
-//		}
-//	}
 
 	@PostMapping("/update")
 	public ResponseEntity<String> updateUser(@Valid @RequestBody NewUserRequest userRequest) {
-//	public ResponseEntity<String> updateUser(@Valid @RequestBody String userRequest)
-//			throws JsonMappingException, JsonProcessingException {
-		System.out.println("IN /user/update route");
-//		ObjectMapper mapper = new ObjectMapper();
-//		User user = mapper.readValue(authenticationRequest, AuthenticationRequest.class);
-//		NewUserRequest userReq = mapper.readValue(userRequest, NewUserRequest.class);
-//		NewUserRequest user = userService.findById(userRequest.getUserid());
-
-//		System.out.println("Userid: " + userRequest.getUserid());
 		NewUserRequest registeredUser = userService.updateUser(userRequest);
 		if (registeredUser != null) {
 			return new ResponseEntity<String>("User Updated", HttpStatus.OK);

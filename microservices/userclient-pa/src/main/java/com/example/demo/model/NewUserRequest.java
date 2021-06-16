@@ -29,17 +29,5 @@ public class NewUserRequest {
 		this.salary = payroll.getSalary();
 	}
 	
-//	public static NewUserRequest createNewUserRequest(User user, PayrollDTO payroll) {
-//		NewUserRequest newUserRequest = new NewUserRequest();
-//		newUserRequest.setDepartment(payroll.getDepartment());
-//		newUserRequest.setSalary(payroll.getSalary());
-//		newUserRequest.setUserid(user.getUserid());
-//		newUserRequest.setPassword(user.getPassword());
-//		newUserRequest.setName(user.getName());
-//		newUserRequest.setAge(user.getAge());
-//		newUserRequest.setRole(user.getRole());
-//		return newUserRequest;
-//	}
-	
 
 }
